@@ -239,11 +239,8 @@ pragma solidity ^0.7.0;
 
 interface IChef {
     function poolLength() external view returns (uint256);
-    function setComPerBlock(uint256 _newPerBlock) external;
     function add(uint256 _allocPoint, address _lpToken, bool _withUpdate) external;
     function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) external;
-    function setMigrator(address _migrator) external;
-    function migrate(uint256 _pid) external;
     function getMultiplier(uint256 _from, uint256 _to) external view returns (uint256);
     function pendingCake(uint256 _pid, address _member) external view returns (uint256);
     function massUpdatePools() external;
