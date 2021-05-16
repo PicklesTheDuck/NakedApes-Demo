@@ -3,14 +3,14 @@
 pragma solidity ^0.8.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
-
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SafeMath.sol";
 
 // YolapToken with Governance. A mix between Sushi, and YFI
 contract YolapToken is ERC20("YolapToken", "Yolap") {
     address public owner;
     mapping(address => bool) public minters;
 
-    constructor() public ERC20Detailed("YOLAP", "YOLAP", 18) {
+    constructor() public {
         owner = msg.sender;
     }
     
@@ -105,7 +105,7 @@ contract YolapToken is ERC20("YolapToken", "Yolap") {
         bytes32 r,
         bytes32 s
     )
-        exterYolapl
+        external
     {
         bytes32 domainSeparator = keccak256(
             abi.encode(
@@ -133,11 +133,11 @@ contract YolapToken is ERC20("YolapToken", "Yolap") {
             )
         );
 
-        address sigYolaptory = ecrecover(digest, v, r, s);
-        require(sigYolaptory != address(0), "Yolap::delegateBySig: invalid sigYolapture");
-        require(nonce == nonces[sigYolaptory]++, "Yolap::delegateBySig: invalid nonce");
-        require(now <= expiry, "Yolap::delegateBySig: sigYolapture expired");
-        return _delegate(sigYolaptory, delegatee);
+        address signatory = ecrecover(digest, v, r, s);
+        require(signatory != address(0), "Yolap::delegateBySig: invalid signature");
+        require(nonce == nonces[signatory]++, "Yolap::delegateBySig: invalid nonce");
+        require(now <= expiry, "Yolap::delegateBySig: signature expired");
+        return _delegate(signatory, delegatee);
     }
 
     /**
@@ -146,7 +146,7 @@ contract YolapToken is ERC20("YolapToken", "Yolap") {
      * @return The number of current votes for `account`
      */
     function getCurrentVotes(address account)
-        exterYolapl
+        external
         view
         returns (uint256)
     {
@@ -162,7 +162,7 @@ contract YolapToken is ERC20("YolapToken", "Yolap") {
      * @return The number of votes the account had as of the given block
      */
     function getPriorVotes(address account, uint blockNumber)
-        exterYolapl
+        external
         view
         returns (uint256)
     {
@@ -200,7 +200,7 @@ contract YolapToken is ERC20("YolapToken", "Yolap") {
     }
 
     function _delegate(address delegator, address delegatee)
-        interYolapl
+        internal
     {
         address currentDelegate = _delegates[delegator];
         uint256 delegatorBalance = balanceOf(delegator); // balance of underlying Yolaps (not scaled);
@@ -211,7 +211,7 @@ contract YolapToken is ERC20("YolapToken", "Yolap") {
         _moveDelegates(currentDelegate, delegatee, delegatorBalance);
     }
 
-    function _moveDelegates(address srcRep, address dstRep, uint256 amount) interYolapl {
+    function _moveDelegates(address srcRep, address dstRep, uint256 amount) internal {
         if (srcRep != dstRep && amount > 0) {
             if (srcRep != address(0)) {
                 // decrease old representative
@@ -237,7 +237,7 @@ contract YolapToken is ERC20("YolapToken", "Yolap") {
         uint256 oldVotes,
         uint256 newVotes
     )
-        interYolapl
+        internal
     {
         uint32 blockNumber = safe32(block.number, "Yolap::_writeCheckpoint: block number exceeds 32 bits");
 
@@ -251,12 +251,12 @@ contract YolapToken is ERC20("YolapToken", "Yolap") {
         emit DelegateVotesChanged(delegatee, oldVotes, newVotes);
     }
 
-    function safe32(uint n, string memory errorMessage) interYolapl pure returns (uint32) {
+    function safe32(uint n, string memory errorMessage) internal pure returns (uint32) {
         require(n < 2**32, errorMessage);
         return uint32(n);
     }
 
-    function getChainId() interYolapl pure returns (uint) {
+    function getChainId() internal pure returns (uint) {
         uint256 chainId;
         assembly { chainId := chainid() }
         return chainId;
