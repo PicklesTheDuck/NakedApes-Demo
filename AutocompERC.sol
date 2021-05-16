@@ -372,7 +372,7 @@ contract CHEF_LP_FOR_LP is ERC20, Ownable {
     }
 
     function _DEPOSIT(uint amount) internal {
-        require(members[msg.sender], "NakedApes: you're not on whitelist");
+        require(members[msg.sender], "NakedApes: you are not a member");
         require(totalDeposits >= totalSupply, "NakedApes: DEPOSIT failed");
         require(LPtoken.transferFrom(msg.sender, address(this), amount), "NakedApes: transferFrom failed");
         _DEPOSIT_INTO_CHEF(amount);
