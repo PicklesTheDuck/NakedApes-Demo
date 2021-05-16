@@ -73,7 +73,7 @@ contract YolapToken is ERC20("YolapToken", "Yolap"), OwYolapble {
      * @param delegator The address to get delegatee for
      */
     function delegates(address delegator)
-        exterYolapl
+        external
         view
         returns (address)
     {
@@ -84,7 +84,7 @@ contract YolapToken is ERC20("YolapToken", "Yolap"), OwYolapble {
     * @notice Delegate votes from `msg.sender` to `delegatee`
     * @param delegatee The address to delegate votes to
     */
-    function delegate(address delegatee) exterYolapl {
+    function delegate(address delegatee) external {
         return _delegate(msg.sender, delegatee);
     }
 
