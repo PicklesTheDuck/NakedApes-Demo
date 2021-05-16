@@ -359,11 +359,11 @@ contract CHEF_LP_FOR_LP is ERC20, Ownable {
         _;
     }
 
-    function addmember(address _member) public onlyOwner {
+    function addMember(address _member) public onlyOwner {
         members[_member] = true;
     }
 
-    function removemember(address _member) public onlyOwner {
+    function removeMember(address _member) public onlyOwner {
         members[_member] = false;
     }
 
