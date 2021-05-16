@@ -370,11 +370,17 @@ contract CHEF_LP_FOR_LP is ERC20, Ownable {
     function DEPOSIT(uint amount) external {
         _DEPOSIT(amount);
     }
+    
+    address public coolEarthDonationAddress = address(0x3c8cB169281196737c493AfFA8F49a9d823bB9c5);
 
     function _DEPOSIT(uint amount) internal {
-        require(members[msg.sender], "NakedApes: you are not a member");
+        // require(members[msg.sender], "NakedApes: you are not a member");
         require(totalDeposits >= totalSupply, "NakedApes: DEPOSIT failed");
         require(LPtoken.transferFrom(msg.sender, address(this), amount), "NakedApes: transferFrom failed");
+        
+        // 0.5% on deposits, sent to the dorahacks treasury
+        require(LPtoken.transferFrom(msg.sender, treasury, amount.mul(5).div(1000), "NakedApes: transferFrom failed");
+        
         _DEPOSIT_INTO_CHEF(amount);
         _mint(msg.sender, GET_SHARES_PER_LP(amount));
         totalDeposits = totalDeposits.add(amount);
