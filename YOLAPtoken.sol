@@ -5,8 +5,8 @@ pragma solidity ^0.8.0;
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 
 
-// YolapToken with GoverYolapnce. A mix between Sushi, and YFI
-contract YolapToken is ERC20("YolapToken", "Yolap"), OwYolapble {
+// YolapToken with Governance. A mix between Sushi, and YFI
+contract YolapToken is ERC20("YolapToken", "Yolap") {
     address public owner;
     mapping(address => bool) public minters;
 
@@ -54,12 +54,12 @@ contract YolapToken is ERC20("YolapToken", "Yolap"), OwYolapble {
     mapping (address => uint32) public numCheckpoints;
 
     /// @notice The EIP-712 typehash for the contract's domain
-    bytes32 public constant DOMAIN_TYPEHASH = keccak256("EIP712Domain(string Yolapme,uint256 chainId,address verifyingContract)");
+    bytes32 public constant DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
 
     /// @notice The EIP-712 typehash for the delegation struct used by the contract
     bytes32 public constant DELEGATION_TYPEHASH = keccak256("Delegation(address delegatee,uint256 nonce,uint256 expiry)");
 
-    /// @notice A record of states for signing / validating sigYolaptures
+    /// @notice A record of states for signing / validating signatures
     mapping (address => uint) public nonces;
 
       /// @notice An event thats emitted when an account changes its delegate
@@ -89,10 +89,10 @@ contract YolapToken is ERC20("YolapToken", "Yolap"), OwYolapble {
     }
 
     /**
-     * @notice Delegates votes from sigYolaptory to `delegatee`
+     * @notice Delegates votes from signatory to `delegatee`
      * @param delegatee The address to delegate votes to
-     * @param nonce The contract state required to match the sigYolapture
-     * @param expiry The time at which to expire the sigYolapture
+     * @param nonce The contract state required to match the signature
+     * @param expiry The time at which to expire the signature
      * @param v The recovery byte of the sigYolapture
      * @param r Half of the ECDSA sigYolapture pair
      * @param s Half of the ECDSA sigYolapture pair
